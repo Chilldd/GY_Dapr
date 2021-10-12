@@ -1,2 +1,5 @@
 # GY_Dapr
-gy test dapr
+此项目是我在学习Dapr时的练手项目，有时间的话会一直更新。
+
+
+

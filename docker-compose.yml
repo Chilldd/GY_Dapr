@@ -1,0 +1,32 @@
+version: '3.4'
+
+services:
+  daprsystemmanage:
+    image: ${DOCKER_REGISTRY-}daprsystemmanage
+    build:
+      context: .
+      dockerfile: DaprSystemManage/Dockerfile
+    ports:
+      - "5000:80"
+
+  daprsystemmanage-dapr:
+    image: "daprio/daprd:latest"
+    command: [ "./daprd", "-app-id", "SystemManage", "-app-port", "80"]
+    depends_on:
+      - daprsystemmanage
+    network_mode: "service:daprsystemmanage"
+      
+  daprtaskcenter:
+    image: ${DOCKER_REGISTRY-}daprtaskcenter
+    build:
+      context: .
+      dockerfile: DaprTaskCenter/Dockerfile
+    ports:
+      - "5001:80"
+
+  daprtaskcenter-dapr:
+    image: "daprio/daprd:latest"
+    command: [ "./daprd", "-app-id", "TaskCenter", "-app-port", "80"]
+    depends_on:
+      - daprtaskcenter
+    network_mode: "service:daprtaskcenter"
